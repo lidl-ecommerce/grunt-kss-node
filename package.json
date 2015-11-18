@@ -2,18 +2,18 @@
   "name": "grunt-kss-node",
   "description": "KSS styleguide generator for grunt.",
   "version": "1.0.0",
-  "homepage": "https://github.com/lidl-ecommerce/grunt-kss",
+  "homepage": "https://github.com/lidl-ecommerce/grunt-kss-node",
   "repository": {
     "type": "git",
-    "url": "git://github.com/lidl-ecommerce/grunt-kss.git"
+    "url": "git://github.com/lidl-ecommerce/grunt-kss-node.git"
   },
   "bugs": {
-    "url": "https://github.com/lidl-ecommerce/grunt-kss/issues"
+    "url": "https://github.com/lidl-ecommerce/grunt-kss-node/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/lidl-ecommerce/grunt-kss/blob/master/LICENSE"
+      "url": "https://github.com/lidl-ecommerce/grunt-kss-node/blob/master/LICENSE"
     }
   ],
   "main": "Gruntfile.js",
