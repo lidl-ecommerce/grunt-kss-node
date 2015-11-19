@@ -1,7 +1,7 @@
-# grunt-kss
+# grunt-kss-node
  
-[![NPM version](https://badge.fury.io/js/grunt-kss.svg)](http://badge.fury.io/js/grunt-kss)
-[![Dependency Status](https://david-dm.org/lidl-ecommerce/grunt-kss.svg)](https://david-dm.org/lidl-ecommerce/grunt-kss)
+[![NPM version](https://badge.fury.io/js/grunt-kss-node.svg)](http://badge.fury.io/js/grunt-kss-node)
+[![Dependency Status](https://david-dm.org/lidl-ecommerce/grunt-kss-node.svg)](https://david-dm.org/lidl-ecommerce/grunt-kss-node)
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
 [![Npm Downloads](https://nodei.co/npm/grunt-kss.png?downloads=true&stars=true)](https://nodei.co/npm/grunt-kss.png?downloads=true&stars=true)

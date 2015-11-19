@@ -1,7 +1,7 @@
 /**
  * grunt-kss
  *
- * https://github.com/lidl-ecommerce/grunt-kss
+ * https://github.com/lidl-ecommerce/grunt-kss-node
 
  * @author Foued Dghaies <foued@dghaies.de>
  * @licence  MIT license.
