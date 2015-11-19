@@ -16,8 +16,10 @@ module.exports = function gruntKss(grunt) {
     grunt.registerMultiTask('kss', 'Generate style guide by kss-node.', function kssTask() {
 
         var node = 'node';
-        var kssNpmPath = 'node_modules/kss/bin/kss-node';
+        var kssNpmPath = 'kss/bin/kss-node';
         var fs = require('fs');
+        var path = require('path');
+        var currentDir = path.dirname(__dirname);
         var exec = require('child_process').exec;
         var currentTask = grunt.task.current;
         var done = currentTask.async();
@@ -61,7 +63,7 @@ module.exports = function gruntKss(grunt) {
             files.forEach(function parseDestinationsFile(file) {
 
                 if (file.src.length === 0) {
-                    grunt.log.error('No source files founded');
+                    grunt.log.error('No source files founded 1');
                     grunt.fail.warn('Wrong configuration', 1);
                 }
                 fs.exists(file.src[0], function srcExists(exists) {
@@ -101,8 +103,35 @@ module.exports = function gruntKss(grunt) {
             done();
         };
 
+        /**
+         * found out the kss-node module
+         *
+         * @param {string} baseKssPath base dir 'kss/bin/kss-node'
+         * @param {string} currentPath current Project Path
+         * @returns {string}
+         */
+        var getKssNode = function getKssNode(baseKssPath, currentPath) {
+            var kss = null;
+            var localKss = currentPath + '/node_modules/' + baseKssPath;
+            if (grunt.file.exists(localKss)) {
+                return localKss;
+            }
+            var projektPath = path.dirname(currentPath);
+            var projectKss = projektPath + '/' + baseKssPath;
+            if (grunt.file.exists(projectKss)) {
+                return projectKss;
+
+            } else {
+                grunt.log.error('Kss-node not found, please install kss!');
+                grunt.fail.warn('Wrong installation/environnement', 1);
+            }
+        };
+
+        //console.log(getKssNode(kssNpmPath, currentDir));
+        //return false;
         // Execute
-        var kssCmd = _buildKssCmd(node, kssNpmPath, options, files);
+        var kssNode = getKssNode(kssNpmPath, currentDir);
+        var kssCmd = _buildKssCmd(node, kssNode, options, files);
         exec(kssCmd.join(' '), _log);
         var logs = kssCmd.slice(2);
         grunt.log.ok('kss-node ' + logs.join(' '));
