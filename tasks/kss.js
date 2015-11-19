@@ -2,6 +2,8 @@
  * grunt-kss
  *
  * https://github.com/lidl-ecommerce/grunt-kss
+
+ * @author Foued Dghaies <foued@dghaies.de>
  * @licence  MIT license.
  *
  * @param grunt
@@ -13,16 +15,15 @@ module.exports = function gruntKss(grunt) {
 
     grunt.registerMultiTask('kss', 'Generate style guide by kss-node.', function kssTask() {
 
+        var node = 'node';
+        var kssNpmPath = 'node_modules/kss/bin/kss-node';
         var fs = require('fs');
-        var path = require('path');
         var exec = require('child_process').exec;
-        var done = this.async();
-
-        var kssCmd = ['node'];
-        var realPath = path.dirname(__filename).replace(/tasks$/g, '');
+        var currentTask = grunt.task.current;
+        var done = currentTask.async();
         var dest = process.cwd();
-
-        var opts = this.options({
+        var files = currentTask.files;
+        var options = currentTask.options({
             template: null,
             helpers: null,
             mask: null,
@@ -32,37 +33,65 @@ module.exports = function gruntKss(grunt) {
             config: null
         });
 
-        kssCmd.push(realPath + 'node_modules/kss/bin/kss-node');
+        /**
+         * build kss command
+         *
+         * @private
+         * @param {string} node path to nodejs bin
+         * @param {string} kssNpmPath path to kss bin
+         * @param {array} options kss options
+         * @param {array} files file list grunt.task.current.files
+         * @returns {array}
+         */
+        var _buildKssCmd = function buildKssCmd(node, kssNpmPath, options, files) {
 
-        this.files.forEach(function parseDestinationsFile(file) {
-            kssCmd.push('"' + file.src[0] + '"');
-            kssCmd.push('"' + file.dest + '"');
-            dest = file.dest;
-        });
+            var cmd = [
+                node,
+                kssNpmPath
+            ];
+            for (var optionName in options) {
 
-        if (opts.template !== null) {
-            kssCmd.push('--template', opts.template);
-        }
-        if (opts.helpers !== null) {
-            kssCmd.push('--helpers', opts.helpers);
-        }
-        if (opts.mask !== null) {
-            kssCmd.push('--mask', opts.mask);
-        }
-        if (opts.custom !== null) {
-            kssCmd.push('--custom', opts.custom);
-        }
-        if (opts.css !== null) {
-            kssCmd.push('--css', opts.css);
-        }
-        if (opts.js !== null) {
-            kssCmd.push('--js', opts.js);
-        }
-        if (opts.config !== null) {
-            kssCmd.push('--config', opts.config);
-        }
+                grunt.log.debug('Reading option: ' + optionName);
 
-        var putInfo = function putInfo(error, result, code) {
+                if (options.hasOwnProperty(optionName) && typeof options[optionName] === 'string') {
+                    grunt.log.debug('                > ' + options[optionName]);
+                    cmd.push('--' + optionName, options[optionName]);
+                }
+            }
+            files.forEach(function parseDestinationsFile(file) {
+
+                if (file.src.length === 0) {
+                    grunt.log.error('No source files founded');
+                    grunt.fail.warn('Wrong configuration', 1);
+                }
+                fs.exists(file.src[0], function srcExists(exists) {
+                    if (!exists) {
+                        grunt.log.error('src config file path does not exist!');
+                        grunt.fail.warn('Wrong configuration', 1);
+                    }
+                });
+                fs.exists(file.dest, function destExists(exists) {
+                    if (!exists) {
+                        grunt.file.mkdir(options.dest);
+                    }
+                });
+                cmd.push('"' + file.src[0] + '"');
+                cmd.push('"' + file.dest + '"');
+                dest = file.dest;
+            });
+            return cmd;
+        };
+
+        /**
+         * log execution returns
+         *
+         * @private
+         * @param {string} error
+         * @param {string} result
+         * @param {integer} code
+         *
+         */
+        var _log = function putInfo(error, result, code) {
             if (error !== null) {
                 grunt.log.error(error);
                 grunt.log.error('Code: ' + code);
@@ -73,7 +102,8 @@ module.exports = function gruntKss(grunt) {
         };
 
         // Execute
-        exec(kssCmd.join(' '), putInfo);
+        var kssCmd = _buildKssCmd(node, kssNpmPath, options, files);
+        exec(kssCmd.join(' '), _log);
         var logs = kssCmd.slice(2);
         grunt.log.ok('kss-node ' + logs.join(' '));
 
