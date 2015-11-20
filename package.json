@@ -1,7 +1,7 @@
 {
   "name": "grunt-kss-node",
   "description": "KSS styleguide generator for grunt.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/lidl-ecommerce/grunt-kss-node",
   "repository": {
     "type": "git",
@@ -24,7 +24,7 @@
     "test": "grunt test"
   },
   "dependencies": {
-    "kss": "^2.0.1"
+    "kss": "2.0.1"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
