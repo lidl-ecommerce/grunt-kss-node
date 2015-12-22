@@ -74,7 +74,7 @@ module.exports = function gruntKss(grunt) {
                 });
                 fs.exists(file.dest, function destExists(exists) {
                     if (!exists) {
-                        grunt.file.mkdir(options.dest);
+                        grunt.file.mkdir(file.dest);
                     }
                 });
                 cmd.push('"' + file.src[0] + '"');
