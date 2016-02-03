@@ -48,16 +48,28 @@ module.exports = function gruntKss(grunt) {
         var _buildKssCmd = function buildKssCmd(node, kssNpmPath, options, files) {
 
             var cmd = [
-                node,
-                kssNpmPath
-            ];
+                    node,
+                    kssNpmPath
+                ],
+                options;
             for (var optionName in options) {
 
-                grunt.log.debug('Reading option: ' + optionName);
+                if (options.hasOwnProperty(optionName)) {
+                    grunt.log.debug('Reading option: ' + optionName);
 
-                if (options.hasOwnProperty(optionName) && typeof options[optionName] === 'string') {
-                    grunt.log.debug('                > ' + options[optionName]);
-                    cmd.push('--' + optionName, options[optionName]);
+                    var values = options[optionName];
+                    if (!Array.isArray(values)) {
+                        values = [values];
+                    }
+                    for (var i = 0; i < values.length; i++) {
+                        if (values[i] && typeof values[i] === 'boolean') {
+                            grunt.log.debug('                > TRUE');
+                            cmd.push('--' + optionName);
+                        } else if (typeof values[i] === 'string') {
+                            cmd.push('--' + optionName, values[i]);
+                            grunt.log.debug('                > ' + values[i]);
+                        }
+                    }
                 }
             }
             files.forEach(function parseDestinationsFile(file) {
@@ -66,8 +78,11 @@ module.exports = function gruntKss(grunt) {
                     grunt.log.error('No source files found');
                     grunt.fail.warn('Wrong configuration', 1);
                 }
-                cmd.push('"' + file.src[0] + '"');
-                cmd.push('"' + file.dest + '"');
+                cmd.push('--destination', '"' + file.dest + '"');
+                for (var i = 0; i < file.src.length; i++) {
+                    cmd.push('--source', '"' + file.src[i] + '"');
+                }
+
                 dest = file.dest;
             });
             return cmd;
