@@ -63,7 +63,7 @@ module.exports = function gruntKss(grunt) {
             files.forEach(function parseDestinationsFile(file) {
 
                 if (file.src.length === 0) {
-                    grunt.log.error('No source files founded 1');
+                    grunt.log.error('No source files found');
                     grunt.fail.warn('Wrong configuration', 1);
                 }
                 cmd.push('"' + file.src[0] + '"');
