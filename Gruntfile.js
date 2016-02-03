@@ -32,11 +32,13 @@ module.exports = function mainGruntTask(grunt) {
 
         // Configuration to be run (and then tested).
         kss: {
+            options: {
+                homepage: 'homepage.md',
+                verbose: true
+            },
             dist: {
-                files: {
-                    // dest : src
-                    'test/tmp_dist': ['test/fixtures']
-                }
+                src: ['node_modules/kss/demo'],
+                dest: 'test/tmp_dist'
             }
         },
 
