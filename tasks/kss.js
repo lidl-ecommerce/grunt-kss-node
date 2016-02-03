@@ -66,17 +66,6 @@ module.exports = function gruntKss(grunt) {
                     grunt.log.error('No source files founded 1');
                     grunt.fail.warn('Wrong configuration', 1);
                 }
-                fs.exists(file.src[0], function srcExists(exists) {
-                    if (!exists) {
-                        grunt.log.error('src config file path does not exist!');
-                        grunt.fail.warn('Wrong configuration', 1);
-                    }
-                });
-                fs.exists(file.dest, function destExists(exists) {
-                    if (!exists) {
-                        grunt.file.mkdir(file.dest);
-                    }
-                });
                 cmd.push('"' + file.src[0] + '"');
                 cmd.push('"' + file.dest + '"');
                 dest = file.dest;
