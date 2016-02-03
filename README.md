@@ -7,7 +7,7 @@
 [![Npm Downloads](https://nodei.co/npm/grunt-kss.png?downloads=true&stars=true)](https://nodei.co/npm/grunt-kss.png?downloads=true&stars=true)
 
 
-> KSS styleguide generator for grunt.
+> KSS style guide generator for grunt.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.x`
@@ -36,10 +36,9 @@ grunt.initConfig({
       css: '/path/to/style.css',
     },
     dist: {
-	    files: {
-	      '/path/to/destdir': ['/path/to/sourcedir']
-	    }
-  	}
+      src: ['/path/to/sourcedir'],
+      dest: '/path/to/destdir'
+    }
   }
 });
 ```
@@ -62,44 +61,44 @@ Finally, you can call kss by running `grunt styleguide`.
 Type: `String`
 Default value: `null`
 
-A string value that is used to use a custom template to build your styleguide.
+Use a custom template to build your style guide.
 
 #### options.helpers
-Type: `String`
+Type: `String` or array of `String`
 Default value: `null`
 
-Specify the location of custom handlebars helpers; see
+Specify location(s) of custom handlebars helpers; see
 http://bit.ly/kss-helpers
 
 #### options.mask
 Type: `String`
 Default value: `null`
 
-A string value that is used to use a custom mask for detecting stylesheets.
+Use a custom mask for detecting stylesheets.
 
 #### options.custom
-Type: `String`
+Type: `String` or array of `String`
 Default value: `null`
 
-A string value that is used to use a custom property name when parsing KSS comments.
+Use custom property name(s) when parsing KSS comments.
 
 #### options.css
-Type: `String`
+Type: `String` or array of `String`
 Default value: `null`
 
-A string value that is used to use including a CSS stylesheet for your styleguide.
+Adds CSS stylesheet(s) to your style guide.
 
 #### options.js
-Type: `String`
+Type: `String` or array of `String`
 Default value: `null`
 
-A string value that is used to use including a JavaScript file for your styleguide.
+Adds JavaScript file(s) to your style guide.
 
 #### options.config
 Type: `String`
 Default value: `null`
 
-Load the kss-node configuration from a JSON file
+Loads the kss-node configuration from a JSON file.
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
+In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
